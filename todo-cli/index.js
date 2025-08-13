@@ -30,6 +30,7 @@ program.command('add <title>')
   .description('Add new to-do item')
   .action((itemTitle, options) => {
     todos.push({ title: itemTitle, done: false});
+    saveTodos(todos)
     console.log(`✅ Added: ${itemTitle}`)
   });
 
