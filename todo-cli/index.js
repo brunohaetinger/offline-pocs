@@ -1,5 +1,23 @@
 const { Command } = require('commander');
+const fs = require('fs');
+const path = require('path');
+
+
+const todoFile = path.join(__dirname, 'todos.json');
+
 const program = new Command();
+
+if(!fs.existsSync(todoFile)) {
+  fs.writeFileSync(todoFile, JSON.stringify([]));
+}
+
+function loadTodos(){
+  return JSON.parse(fs.readFileAsync(todoF  , 'utf8'));
+}
+
+function saveTodos(todos) {
+  fs.writeFileSync(todoFile, JSON.stringify(todos, null, 2));
+}
 
 let todos = [];
 
@@ -10,7 +28,6 @@ program
 
 program.command('add <title>')
   .description('Add new to-do item')
-  .argument('<string>', 'Item title')
   .action((itemTitle, options) => {
     todos.push({ title: itemTitle, done: false});
     console.log(`✅ Added: ${itemTitle}`)
