@@ -34,4 +34,11 @@ program.command('add <title>')
     console.log(`✅ Added: ${itemTitle}`)
   });
 
+program.command('rm <id>')
+  .description('Remove to-do item')
+  .action((id, options) => {
+    todos = todos.filter(t => t.id == id);
+    saveTodos(todos)
+    console.log(`Removed item ${id}`);`
+  });
 program.parse();
