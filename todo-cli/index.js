@@ -44,6 +44,16 @@ program.command('rm <id>')
     console.log(`Removed item ${id}`);
   });
 
+program.command('done <id>')
+  .description('Complete to-do item')
+  .action((id, options) => {
+    todos = loadTodos();
+    todos = todos.map(todo => todo.id === id ? {...todo, done: true} : todo);
+    saveTodos(todos)
+    console.log(`Removed item ${id}`);
+  });
+
+
 program.command('list')
   .description('List to-do items')
   .action((options) => {
