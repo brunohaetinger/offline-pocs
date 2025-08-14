@@ -12,7 +12,7 @@ if(!fs.existsSync(todoFile)) {
 }
 
 function loadTodos(){
-  return JSON.parse(fs.readFileAsync(todoF  , 'utf8'));
+  return JSON.parse(fs.readFileSync(todoFile , 'utf8'));
 }
 
 function saveTodos(todos) {
@@ -29,6 +29,7 @@ program
 program.command('add <title>')
   .description('Add new to-do item')
   .action((itemTitle, options) => {
+    todos = loadTodos();
     todos.push({ title: itemTitle, done: false});
     saveTodos(todos)
     console.log(`✅ Added: ${itemTitle}`)
@@ -37,8 +38,17 @@ program.command('add <title>')
 program.command('rm <id>')
   .description('Remove to-do item')
   .action((id, options) => {
+    todos = loadTodos();
     todos = todos.filter(t => t.id == id);
     saveTodos(todos)
-    console.log(`Removed item ${id}`);`
+    console.log(`Removed item ${id}`);
   });
+
+program.command('list')
+  .description('List to-do items')
+  .action((options) => {
+    todos = loadTodos();
+    console.table(todos)
+  });
+
 program.parse();
