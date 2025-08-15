@@ -34,13 +34,13 @@ program.command('add <title>')
     console.log(`✅ Added: ${itemTitle}`)
   });
 
-program.command('rm <id>')
+program.command('rm <index>')
   .description('Remove to-do item')
-  .action((id, options) => {
+  .action((index, options) => {
     const todos = loadTodos();
-    todos = todos.filter(t => t.id == id);
-    saveTodos(todos)
-    console.log(`Removed item ${id}`);
+    const filteredTodos = todos.filter((todo, i) => i !== Number(index));
+    saveTodos(filteredTodos)
+    console.log(`Removed item at ${index}`);
   });
 
 program.command('done <index>')
