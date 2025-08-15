@@ -43,12 +43,13 @@ program.command('rm <id>')
     console.log(`Removed item ${id}`);
   });
 
-program.command('done <id>')
+program.command('done <index>')
   .description('Complete to-do item')
-  .action((id, options) => {
+  .action((index, options) => {
     const todos = loadTodos();
-    // saveTodos(todos.map(todo => todo.id === id ? { ...todo, done: true } : todo))
-    console.log(`Marked item ${id} as done`);
+    const newTodos = todos.map((todo, i) => i === Number(index) ? { ...todo, done: true } : todo);
+    saveTodos(newTodos)
+    console.log(`Marked item at index ${index} as done`);
   });
 
 
