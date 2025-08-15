@@ -27,7 +27,7 @@ program
 
 program.command('add <title>')
   .description('Add new to-do item')
-  .action((itemTitle, options) => {
+  .action((itemTitle) => {
     const todos = loadTodos();
     todos.push({ title: itemTitle, done: false });
     saveTodos(todos)
@@ -36,16 +36,16 @@ program.command('add <title>')
 
 program.command('rm <index>')
   .description('Remove to-do item')
-  .action((index, options) => {
+  .action((index) => {
     const todos = loadTodos();
-    const filteredTodos = todos.filter((todo, i) => i !== Number(index));
+    const filteredTodos = todos.filter((_, i) => i !== Number(index));
     saveTodos(filteredTodos)
     console.log(`Removed item at ${index}`);
   });
 
 program.command('done <index>')
   .description('Complete to-do item')
-  .action((index, options) => {
+  .action((index) => {
     const todos = loadTodos();
     const newTodos = todos.map((todo, i) => i === Number(index) ? { ...todo, done: true } : todo);
     saveTodos(newTodos)
@@ -55,7 +55,7 @@ program.command('done <index>')
 
 program.command('ls')
   .description('List to-do items')
-  .action((options) => {
+  .action(_ => {
     const todos = loadTodos();
     console.table(todos)
   });
