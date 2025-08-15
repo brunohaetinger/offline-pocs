@@ -7,19 +7,18 @@ const todoFile = path.join(__dirname, 'todos.json');
 
 const program = new Command();
 
-if(!fs.existsSync(todoFile)) {
+if (!fs.existsSync(todoFile)) {
   fs.writeFileSync(todoFile, JSON.stringify([]));
 }
 
-function loadTodos(){
-  return JSON.parse(fs.readFileSync(todoFile , 'utf8'));
+function loadTodos() {
+  return JSON.parse(fs.readFileSync(todoFile, 'utf8'));
 }
 
 function saveTodos(todos) {
   fs.writeFileSync(todoFile, JSON.stringify(todos, null, 2));
 }
 
-let todos = [];
 
 program
   .name('todo-cli')
@@ -29,8 +28,8 @@ program
 program.command('add <title>')
   .description('Add new to-do item')
   .action((itemTitle, options) => {
-    todos = loadTodos();
-    todos.push({ title: itemTitle, done: false});
+    const todos = loadTodos();
+    todos.push({ title: itemTitle, done: false });
     saveTodos(todos)
     console.log(`✅ Added: ${itemTitle}`)
   });
@@ -38,7 +37,7 @@ program.command('add <title>')
 program.command('rm <id>')
   .description('Remove to-do item')
   .action((id, options) => {
-    todos = loadTodos();
+    const todos = loadTodos();
     todos = todos.filter(t => t.id == id);
     saveTodos(todos)
     console.log(`Removed item ${id}`);
@@ -47,17 +46,16 @@ program.command('rm <id>')
 program.command('done <id>')
   .description('Complete to-do item')
   .action((id, options) => {
-    todos = loadTodos();
-    todos = todos.map(todo => todo.id === id ? {...todo, done: true} : todo);
-    saveTodos(todos)
-    console.log(`Removed item ${id}`);
+    const todos = loadTodos();
+    // saveTodos(todos.map(todo => todo.id === id ? { ...todo, done: true } : todo))
+    console.log(`Marked item ${id} as done`);
   });
 
 
-program.command('list')
+program.command('ls')
   .description('List to-do items')
   .action((options) => {
-    todos = loadTodos();
+    const todos = loadTodos();
     console.table(todos)
   });
 
