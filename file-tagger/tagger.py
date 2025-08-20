@@ -40,6 +40,28 @@ def add(file_path, tags):
     conn.close()
 
 
+def remove(file_path, tags):
+    conn = init_db()
+    cur = conn.cursor()
+    # TODO: modify to REMOVE tag from file_path
+    # Insert file
+    cur.execute("INSERT OR IGNORE INTO files(path) VALUES(?)", (file_path,))
+    conn.commit()
+    cur.execute("SELECT id FROM files WHERE path=?", (file_path,))
+    file_id = cur.fetchone()[0]
+    # Insert tags
+    for tag in tags:
+        cur.execute("INSERT OR IGNORE INTO tags(name) VALUES(?)", (tag,))
+        conn.commit()
+        cur.execute("SELECT id FROM tags WHERE name=?", (tag,))
+        tag_id = cur.fetchone()[0]
+        cur.execute(
+            "INSERT OR IGNORE INTO file_tags(file_id, tag_id) VALUES(?, ?)", (file_id, tag_id))
+    conn.commit()
+    print(f"Added tags {tags} to {file_path}")
+    conn.close()
+
+
 def list_tags(file_path):
     conn = init_db()
     cur = conn.cursor()
@@ -97,6 +119,11 @@ if __name__ == "__main__":
             print("Usage: ./tagger.py add <file_path> <tag1> [tag2...]")
         else:
             add(sys.argv[2], sys.argv[3:])
+    if cmd == "rm":
+        if len(sys.argv) < 4:
+            print("Usage: ./tagger.py rm <file_path> <tag1> [tag2...]")
+        else:
+            remove(sys.argv[2], sys.argv[3:])
     elif cmd == "list":
         if len(sys.argv) < 3:
             print("Usage: ./tagger.py list <file_path>")
