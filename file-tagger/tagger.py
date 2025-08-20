@@ -124,6 +124,13 @@ if __name__ == "__main__":
             print("Usage: ./tagger.py rm <file_path> <tag1> [tag2...]")
         else:
             remove(sys.argv[2], sys.argv[3:])
+    if cmd == "rename":
+        if len(sys.argv) < 4:
+            print("Usage: ./tagger.py rename <tag_old_name> <tag_new_name>")
+        else:
+            # remove(sys.argv[2], sys.argv[3:])
+            # TODO: to be implemented
+            print("To be implemented!")
     elif cmd == "list":
         if len(sys.argv) < 3:
             print("Usage: ./tagger.py list <file_path>")
