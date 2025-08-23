@@ -8,6 +8,9 @@
 
 > awk -F',' '{print $2 "," $1 "," $3}' file.csv'
 
--F',' → use , as delimiter
+- -F',' → use , as delimiter
+- {print $2 "," $1 "," $3} → print column2, column1, column3
 
-{print $2 "," $1 "," $3} → print column2, column1, column3
+## sed - vim like command
+
+> sed -E 's/(.*),(.*),(.*)/\2,\1,\3/' file.csv
