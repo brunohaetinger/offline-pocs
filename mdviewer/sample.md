@@ -7,3 +7,13 @@ A tiny **curses** viewer.
 - Lists
 - `inline code`
 - Code blocks:
+
+```
+```python
+def hello():
+  print("hi")
+```
+```
+
+
+
