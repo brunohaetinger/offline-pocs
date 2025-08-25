@@ -9,11 +9,19 @@ A tiny **curses** viewer.
 - Code blocks:
 
 ```
-```python
+```py
 def hello():
   print("hi")
 ```
 ```
 
+> Blockquotes render with a bar.
 
+3. Ordered
+1. Lists
 
+Links like [Python](https://python.org)
+
+---
+
+End.
